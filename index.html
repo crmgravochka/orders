@@ -1,1 +1,260 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мікро-CRM | Замовлення Facebook</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
+</head>
+<body>
 
+    <header>
+        <h1><i class="fab fa-facebook"></i> CRM Замовлення FB</h1>
+    </header>
+
+    <form id="crmOrderForm">
+        
+        <section class="product-options">
+            <h2>Товари та Опції</h2>
+            <div id="productList">
+                
+                <div class="product-item" data-id="product-1" data-name="Брелок Стандарт" data-price="499">
+                    <input type="checkbox" id="check-p1" class="product-checkbox" hidden>
+                    <label for="check-p1" class="item-selector">
+                        <img src="https://via.placeholder.com/50x50?text=P1" alt="Брелок Стандарт" class="product-thumb">
+                        <div class="item-details">
+                            <span class="item-name">Брелок Стандарт</span>
+                            <span class="item-price">499 грн</span>
+                        </div>
+                    </label>
+                    <div class="quantity-control">
+                        <span class="qty-label">Кіл-ть:</span>
+                        <select class="quantity-select" disabled>
+                            <option value="1" selected>1 шт.</option>
+                            <option value="2">2 шт.</option>
+                            <option value="3">3 шт.</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="product-item" data-id="product-2" data-name="Жетон Парний" data-price="750">
+                    <input type="checkbox" id="check-p2" class="product-checkbox" hidden>
+                    <label for="check-p2" class="item-selector">
+                        <img src="https://via.placeholder.com/50x50?text=P2" alt="Жетон Парний" class="product-thumb">
+                        <div class="item-details">
+                            <span class="item-name">Жетон Парний</span>
+                            <span class="item-price">750 грн</span>
+                        </div>
+                    </label>
+                    <div class="quantity-control">
+                        <span class="qty-label">Кіл-ть:</span>
+                        <select class="quantity-select" disabled>
+                            <option value="1" selected>1 шт.</option>
+                            <option value="2">2 шт.</option>
+                            <option value="3">3 шт.</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product-item" data-id="product-3" data-name="Цепочка Преміум" data-price="120">
+                    <input type="checkbox" id="check-p3" class="product-checkbox" hidden>
+                    <label for="check-p3" class="item-selector">
+                        <img src="https://via.placeholder.com/50x50?text=P3" alt="Цепочка Преміум" class="product-thumb">
+                        <div class="item-details">
+                            <span class="item-name">Цепочка Преміум</span>
+                            <span class="item-price">120 грн</span>
+                        </div>
+                    </label>
+                    <div class="quantity-control">
+                        <span class="qty-label">Кіл-ть:</span>
+                        <select class="quantity-select" disabled>
+                            <option value="1" selected>1 шт.</option>
+                            <option value="2">2 шт.</option>
+                            <option value="3">3 шт.</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product-item" data-id="product-4" data-name="Бампер Захисний" data-price="75">
+                    <input type="checkbox" id="check-p4" class="product-checkbox" hidden>
+                    <label for="check-p4" class="item-selector">
+                        <img src="https://via.placeholder.com/50x50?text=P4" alt="Бампер Захисний" class="product-thumb">
+                        <div class="item-details">
+                            <span class="item-name">Бампер Захисний</span>
+                            <span class="item-price">75 грн</span>
+                        </div>
+                    </label>
+                    <div class="quantity-control">
+                        <span class="qty-label">Кіл-ть:</span>
+                        <select class="quantity-select" disabled>
+                            <option value="1" selected>1 шт.</option>
+                            <option value="2">2 шт.</option>
+                            <option value="3">3 шт.</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product-item" data-id="product-5" data-name="Флешка USB 64GB" data-price="800">
+                    <input type="checkbox" id="check-p5" class="product-checkbox" hidden>
+                    <label for="check-p5" class="item-selector">
+                        <img src="https://via.placeholder.com/50x50?text=P5" alt="Флешка USB 64GB" class="product-thumb">
+                        <div class="item-details">
+                            <span class="item-name">Флешка USB 64GB</span>
+                            <span class="item-price">800 грн</span>
+                        </div>
+                    </label>
+                    <div class="quantity-control">
+                        <span class="qty-label">Кіл-ть:</span>
+                        <select class="quantity-select" disabled>
+                            <option value="1" selected>1 шт.</option>
+                            <option value="2">2 шт.</option>
+                            <option value="3">3 шт.</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product-item" data-id="product-6" data-name="Кулон Міні" data-price="350">
+                    <input type="checkbox" id="check-p6" class="product-checkbox" hidden>
+                    <label for="check-p6" class="item-selector">
+                        <img src="https://via.placeholder.com/50x50?text=P6" alt="Кулон Міні" class="product-thumb">
+                        <div class="item-details">
+                            <span class="item-name">Кулон Міні</span>
+                            <span class="item-price">350 грн</span>
+                        </div>
+                    </label>
+                    <div class="quantity-control">
+                        <span class="qty-label">Кіл-ть:</span>
+                        <select class="quantity-select" disabled>
+                            <option value="1" selected>1 шт.</option>
+                            <option value="2">2 шт.</option>
+                            <option value="3">3 шт.</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product-item" data-id="product-7" data-name="Додаткова Гравір." data-price="150">
+                    <input type="checkbox" id="check-p7" class="product-checkbox" hidden>
+                    <label for="check-p7" class="item-selector">
+                        <img src="https://via.placeholder.com/50x50?text=P7" alt="Додаткова Гравір." class="product-thumb">
+                        <div class="item-details">
+                            <span class="item-name">Додаткова Гравір.</span>
+                            <span class="item-price">150 грн</span>
+                        </div>
+                    </label>
+                    <div class="quantity-control">
+                        <span class="qty-label">Кіл-ть:</span>
+                        <select class="quantity-select" disabled>
+                            <option value="1" selected>1 шт.</option>
+                            <option value="2">2 шт.</option>
+                            <option value="3">3 шт.</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product-item" data-id="product-8" data-name="Подарункова Коробка" data-price="90">
+                    <input type="checkbox" id="check-p8" class="product-checkbox" hidden>
+                    <label for="check-p8" class="item-selector">
+                        <img src="https://via.placeholder.com/50x50?text=P8" alt="Подарункова Коробка" class="product-thumb">
+                        <div class="item-details">
+                            <span class="item-name">Подарункова Коробка</span>
+                            <span class="item-price">90 грн</span>
+                        </div>
+                    </label>
+                    <div class="quantity-control">
+                        <span class="qty-label">Кіл-ть:</span>
+                        <select class="quantity-select" disabled>
+                            <option value="1" selected>1 шт.</option>
+                            <option value="2">2 шт.</option>
+                            <option value="3">3 шт.</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="product-item" data-id="product-9" data-name="Шкіряний Ремінець" data-price="180">
+                    <input type="checkbox" id="check-p9" class="product-checkbox" hidden>
+                    <label for="check-p9" class="item-selector">
+                        <img src="https://via.placeholder.com/50x50?text=P9" alt="Шкіряний Ремінець" class="product-thumb">
+                        <div class="item-details">
+                            <span class="item-name">Шкіряний Ремінець</span>
+                            <span class="item-price">180 грн</span>
+                        </div>
+                    </label>
+                    <div class="quantity-control">
+                        <span class="qty-label">Кіл-ть:</span>
+                        <select class="quantity-select" disabled>
+                            <option value="1" selected>1 шт.</option>
+                            <option value="2">2 шт.</option>
+                            <option value="3">3 шт.</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="product-item" data-id="product-10" data-name="Комплект (3 в 1)" data-price="999">
+                    <input type="checkbox" id="check-p10" class="product-checkbox" hidden>
+                    <label for="check-p10" class="item-selector">
+                        <img src="https://via.placeholder.com/50x50?text=P10" alt="Комплект (3 в 1)" class="product-thumb">
+                        <div class="item-details">
+                            <span class="item-name">Комплект (3 в 1)</span>
+                            <span class="item-price">999 грн</span>
+                        </div>
+                    </label>
+                    <div class="quantity-control">
+                        <span class="qty-label">Кіл-ть:</span>
+                        <select class="quantity-select" disabled>
+                            <option value="1" selected>1 шт.</option>
+                            <option value="2">2 шт.</option>
+                            <option value="3">3 шт.</option>
+                        </select>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <section class="client-data">
+            <h2>Дані та Оплата</h2>
+            <div class="input-group required">
+                <label for="clientFacebook"><i class="fab fa-facebook-f"></i> Нік Facebook*</label>
+                <div class="facebook-input-wrapper">
+                    <input type="text" id="clientFacebook" placeholder="Ім'я або @нікнейм" required>
+                    <label for="isUrgent" class="urgent-toggle">
+                        <input type="checkbox" id="isUrgent">
+                        <span class="urgent-label" title="Позначити терміновим (!)">🚨</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="payment-options">
+                <h3 class="payment-title">Метод оплати:</h3>
+                <div class="radio-group">
+                    <label for="payment-prepay">
+                        <input type="radio" id="payment-prepay" name="paymentMethod" value="Предоплата 150 грн" required>
+                        Предоплата 150 грн
+                    </label>
+                    <label for="payment-full">
+                        <input type="radio" id="payment-full" name="paymentMethod" value="Повна оплата">
+                        Повна оплата
+                    </label>
+                    <label for="payment-cod">
+                        <input type="radio" id="payment-cod" name="paymentMethod" value="Накладений платіж">
+                        Накладений платіж
+                    </label>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="summary-and-send">
+            <h3 id="totalSummary">Загальна Сума: 0.00 грн</h3>
+            <button type="submit" id="sendOrderBtn" class="cta-button">
+                <i class="fas fa-paper-plane"></i> Сформувати Замовлення
+            </button>
+        </section>
+
+        <div id="statusMessage" class="status-message"></div>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>
