@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 🚨🚨🚨 УБЕДИТЕСЬ, ЧТО ЗДЕСЬ ВАШ ПРАВИЛЬНЫЙ URL 🚨🚨🚨
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzWp_Jd9iHh5WEIWcO1iib-XwK24UfUpEReW4qb7aEGIfYgCcLMHJ4mrDhjVLHS6q7aPQ/exec';
+    // 🚨🚨🚨 ВАЖНО: ВСТАВЬ СЮДА URL ТВОЕГО CLOUDFLARE WORKER'А 🚨🚨🚨
+    const WORKER_URL = 'https://crm-facebook.brelok2023.workers.dev';
 
     const form = document.getElementById('crmOrderForm');
     const productList = document.getElementById('productList');
     const sendButton = document.getElementById('sendOrderBtn');
     const statusMessage = document.getElementById('statusMessage');
     
-    // --- КЛЮЧЕВАЯ ПРОВЕРКА ---
+    // --- Ключевая проверка ---
     const totalSummaryEl = document.getElementById('totalSummary');
     if (!totalSummaryEl) {
         alert("КРИТИЧЕСКАЯ ОШИБКА: Элемент с id 'totalSummary' не найден на странице HTML. Проверьте ваш HTML-файл.");
@@ -83,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Відправка...';
         statusMessage.textContent = '';
 
-        // --- 1. Сбор данных ---
         const clientFacebook = document.getElementById('clientFacebook').value.trim();
         const isUrgent = document.getElementById('isUrgent').checked;
         
@@ -94,9 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const productId = item.dataset.id;
             const productInfo = PRODUCT_MAP[productId];
             const quantity = parseInt(item.querySelector('.quantity-select').value);
-            
             const itemsArray = Array(quantity).fill(productInfo.name);
-            
             if (productInfo.is_main) {
                 mainItems.push(...itemsArray);
             } else {
@@ -110,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // --- 2. Расчет Предоплаты ---
         let prepaymentAmount = 0;
         const totalAmountText = totalSummaryEl.textContent;
         const totalAmount = parseFloat(totalAmountText.match(/[\d\.]+/)[0]);
@@ -121,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
             prepaymentAmount = totalAmount;
         }
         
-        // --- 3. Формирование Payload для отправки ---
         const payload = {
             Ник: clientFacebook,
             isUrgent: isUrgent,
@@ -130,9 +125,9 @@ document.addEventListener('DOMContentLoaded', () => {
             Предоплата: prepaymentAmount,
         };
 
-        // --- 4. Отправка данных ---
         try {
-            const response = await fetch(GOOGLE_SCRIPT_URL, {
+            // ВАЖНО: Отправляем на WORKER_URL
+            const response = await fetch(WORKER_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
