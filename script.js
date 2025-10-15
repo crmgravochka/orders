@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 🚨🚨🚨 ВАЖНО: ВСТАВЬТЕ СКОПИРОВАННЫЙ URL ВАШЕГО ВЕБ-ПРИЛОЖЕНИЯ СЮДА 🚨🚨🚨
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby5NV4lJAjoQYIVHjvyU9pp46e9mhmeLWHr9RRWAQXybKKsdwtsLAJzViZ0U_oebEHgiQ/exec';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxiPNFUj929I4nqkk0m_6PN956y2WiI-6ZaIKxd88qZkJx8eSPUGowrGi3IHP2FgzA4NA/exec';
 
     // Соответствие ID товара на сайте к кодовому названию в таблице
     const PRODUCT_MAP = {
