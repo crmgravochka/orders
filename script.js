@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 🚨🚨🚨 УБЕДИТЕСЬ, ЧТО ЗДЕСЬ ВАШ ПРАВИЛЬНЫЙ URL 🚨🚨🚨
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxiPNFUj929I4nqkk0m_6PN956y2WiI-6ZaIKxd88qZkJx8eSPUGowrGi3IHP2FgzA4NA/exec';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzWp_Jd9iHh5WEIWcO1iib-XwK24UfUpEReW4qb7aEGIfYgCcLMHJ4mrDhjVLHS6q7aPQ/exec';
 
     const form = document.getElementById('crmOrderForm');
     const productList = document.getElementById('productList');
