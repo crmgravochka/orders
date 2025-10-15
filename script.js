@@ -1,6 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 🚨🚨🚨 ВАЖНО: ВСТАВЬТЕ СКОПИРОВАННЫЙ URL ВАШЕГО ВЕБ-ПРИЛОЖЕНИЯ СЮДА 🚨🚨🚨
+    // 🚨🚨🚨 УБЕДИТЕСЬ, ЧТО ЗДЕСЬ ВАШ ПРАВИЛЬНЫЙ URL 🚨🚨🚨
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxiPNFUj929I4nqkk0m_6PN956y2WiI-6ZaIKxd88qZkJx8eSPUGowrGi3IHP2FgzA4NA/exec';
+
+    const form = document.getElementById('crmOrderForm');
+    const productList = document.getElementById('productList');
+    const sendButton = document.getElementById('sendOrderBtn');
+    const statusMessage = document.getElementById('statusMessage');
+    
+    // --- КЛЮЧЕВАЯ ПРОВЕРКА ---
+    const totalSummaryEl = document.getElementById('totalSummary');
+    if (!totalSummaryEl) {
+        alert("КРИТИЧЕСКАЯ ОШИБКА: Элемент с id 'totalSummary' не найден на странице HTML. Проверьте ваш HTML-файл.");
+        return; // Останавливаем выполнение скрипта
+    }
 
     // Соответствие ID товара на сайте к кодовому названию в таблице
     const PRODUCT_MAP = {
@@ -17,12 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'p_K': { name: 'Пластик', is_main: false },
         'p_L': { name: 'Брелок0', is_main: false },
     };
-
-    const form = document.getElementById('crmOrderForm');
-    const productList = document.getElementById('productList');
-    const totalSummaryEl = document.getElementById('totalSummary');
-    const sendButton = document.getElementById('sendOrderBtn');
-    const statusMessage = document.getElementById('statusMessage');
 
     // --- Логика интерфейса (без изменений) ---
     function setupEventListeners() {
@@ -89,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const productInfo = PRODUCT_MAP[productId];
             const quantity = parseInt(item.querySelector('.quantity-select').value);
             
-            // Создаем массив из названий товара, повторенный quantity раз
             const itemsArray = Array(quantity).fill(productInfo.name);
             
             if (productInfo.is_main) {
@@ -119,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- 3. Формирование Payload для отправки ---
         const payload = {
             Ник: clientFacebook,
-            isUrgent: isUrgent, // Отправляем флаг срочности
+            isUrgent: isUrgent,
             Заказ_жетон: mainItems.join('+') || '-',
             Доп_товары: extraItems.join('+') || '-',
             Предоплата: prepaymentAmount,
@@ -129,7 +134,6 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
-                // mode: 'no-cors' - Убираем, чтобы получать ответ от сервера
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
