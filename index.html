@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мікро-CRM | Замовлення Facebook</title>
+    <title>CRM | Замовлення Facebook</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> 
 </head>
 <body>
 
-    <header>
-        <h1><i class="fab fa-facebook"></i> CRM Замовлення FB</h1>
-    </header>
+    
 
     <form id="crmOrderForm">
         
@@ -202,37 +200,48 @@
             </div>
         </section>
 
-        <section class="client-data">
-            <h2>Дані та Оплата</h2>
-            <div class="input-group required">
-                <label for="clientFacebook"><i class="fab fa-facebook-f"></i> Нік Facebook*</label>
-                <div class="facebook-input-wrapper">
-                    <input type="text" id="clientFacebook" placeholder="Ім'я або @нікнейм" required>
-                    <label for="isUrgent" class="urgent-toggle">
-                        <input type="checkbox" id="isUrgent">
-                        <span class="urgent-label" title="Позначити терміновим (!)">🚨</span>
-                    </label>
-                </div>
-            </div>
+       <section class="client-data">
+    <h2>Дані та Оплата</h2>
+    <div class="input-group required">
+        <label for="clientFacebook"><i class="fab fa-facebook-f"></i> Нік Facebook*</label>
+        <div class="facebook-input-wrapper">
+            <input type="text" id="clientFacebook" placeholder="Ім'я або @нікнейм" required>
+            <label for="isUrgent" class="urgent-toggle">
+                <input type="checkbox" id="isUrgent">
+                <span class="urgent-label" title="Позначити терміновим (!)">🚨</span>
+            </label>
+        </div>
+    </div>
 
-            <div class="payment-options">
-                <h3 class="payment-title">Метод оплати:</h3>
-                <div class="radio-group">
-                    <label for="payment-prepay">
-                        <input type="radio" id="payment-prepay" name="paymentMethod" value="Предоплата 150 грн" required>
-                        Предоплата 150 грн
-                    </label>
-                    <label for="payment-full">
-                        <input type="radio" id="payment-full" name="paymentMethod" value="Повна оплата">
-                        Повна оплата
-                    </label>
-                    <label for="payment-cod">
-                        <input type="radio" id="payment-cod" name="paymentMethod" value="Накладений платіж">
-                        Накладений платіж
-                    </label>
-                </div>
-            </div>
-        </section>
+    <div class="payment-options">
+        <h3 class="payment-title">Метод оплати:</h3>
+       <div class="radio-group">
+    <label>
+        <input type="radio" id="payment-prepay" name="paymentMethod" value="Предоплата 150 грн" required>
+        Предоплата 150 грн
+    </label>
+    <label>
+        <input type="radio" id="payment-full" name="paymentMethod" value="Повна оплата">
+        Повна оплата
+    </label>
+    <label>
+        <input type="radio" id="payment-cod" name="paymentMethod" value="Накладений платіж">
+        Накладений платіж
+    </label>
+    <label>
+        <input type="radio" id="payment-custom" name="paymentMethod" value="custom">
+        Друга сума:
+        <input type="number" id="customPrepaymentAmount" placeholder="сума" disabled style="width: 100px; margin-left: 8px; padding: 5px;">
+    </label>
+</div>
+
+    <div class="input-group">
+        <input type="number" id="extraCharge" placeholder="Доп. Доходи">
+    </div>
+    <div class="input-group">
+        <input type="text" id="orderComment" placeholder="Коментарий (будет в статусе)">
+    </div>
+    </section>
 
         <section class="summary-and-send">
     <h3 id="totalSummary">Загальна Сума: 0.00 грн</h3>
