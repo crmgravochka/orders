@@ -51,6 +51,20 @@ document.addEventListener('DOMContentLoaded', () => {
         'p_J': { name: 'Картон', is_main: false },
         'p_K': { name: 'Пластик', is_main: false },
         'p_L': { name: 'Брелок0', is_main: false },
+        // --- НОВЫЕ ТЕСТОВЫЕ ЗАЖИГАЛКИ (Для вкладки "Зап.") ---
+        'p_Zap1': { name: 'ЗапН', is_main: true },
+        'p_Zap2': { name: 'ЗапНН', is_main: true },
+        'p_Zap3': { name: 'ЗапФН', is_main: true },
+
+        // --- НОВЫЕ ТЕСТОВЫЕ БРАСЛЕТЫ (Для вкладки "Брасл.") ---
+        'p_Brasl1': { name: 'БраслТест1', is_main: false }, 
+        'p_Brasl2': { name: 'БраслТест2', is_main: false },
+        'p_Brasl3': { name: 'БраслТест3', is_main: false },
+
+        // --- НОВЫЕ ТЕСТОВЫЕ "ДРУГОЕ" ---
+        'p_Other1': { name: 'ИншеТест1', is_main: false },
+        'p_Other2': { name: 'ИншеТест2', is_main: false },
+        'p_Other3': { name: 'ИншеТест3', is_main: false },
     };
 
     // --- Функции управления интерфейсом ---
