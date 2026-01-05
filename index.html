@@ -13,192 +13,334 @@
 
     <form id="crmOrderForm">
         
-        <section class="product-options">
-            <h2>Товари та Опції</h2>
-            <div id="productList">
-                
-                <div class="product-item" data-id="p_A" data-name="Товар А" data-price="550">
-                    <input type="checkbox" id="check-pA" class="product-checkbox" hidden>
-                    <label for="check-pA" class="item-selector">
-                        <img src="images/fn.jpg" alt="Товар А" class="product-thumb">
-                        <div class="item-details">
-                            <span class="item-name">ФН</span>
-                            <span class="item-price">550 грн</span>
-                        </div>
-                    </label>
-                    <div class="quantity-control">
-                        <span class="qty-label">Кіл-ть:</span>
-                        <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
-                    </div>
-                </div>
-                
-                <div class="product-item" data-id="p_B" data-name="Товар Б" data-price="450">
-                    <input type="checkbox" id="check-pB" class="product-checkbox" hidden>
-                    <label for="check-pB" class="item-selector">
-                        <img src="images/nn.jpg" alt="Товар Б" class="product-thumb">
-                        <div class="item-details">
-                            <span class="item-name">НН</span>
-                            <span class="item-price">450 грн</span>
-                        </div>
-                    </label>
-                    <div class="quantity-control">
-                        <span class="qty-label">Кіл-ть:</span>
-                        <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
-                    </div>
-                </div>
+       <section class="product-options">
+    <h2>Товари та Опції</h2>
 
-                <div class="product-item" data-id="p_C" data-name="Товар В" data-price="390">
-                    <input type="checkbox" id="check-pC" class="product-checkbox" hidden>
-                    <label for="check-pC" class="item-selector">
-                        <img src="images/n.jpg" alt="Товар В" class="product-thumb">
-                        <div class="item-details">
-                            <span class="item-name">Н</span>
-                            <span class="item-price">390 грн</span>
-                        </div>
-                    </label>
-                    <div class="quantity-control">
-                        <span class="qty-label">Кіл-ть:</span>
-                        <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
-                    </div>
-                </div>
-
-                <div class="product-item" data-id="p_D" data-name="Товар Г" data-price="650">
-                    <input type="checkbox" id="check-pD" class="product-checkbox" hidden>
-                    <label for="check-pD" class="item-selector">
-                        <img src="images/ff.jpg" alt="Товар Г" class="product-thumb">
-                        <div class="item-details">
-                            <span class="item-name">ФФ</span>
-                            <span class="item-price">650 грн</span>
-                        </div>
-                    </label>
-                    <div class="quantity-control">
-                        <span class="qty-label">Кіл-ть:</span>
-                        <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
-                    </div>
-                </div>
-
-                <div class="product-item" data-id="p_E" data-name="Товар Д" data-price="630">
-                    <input type="checkbox" id="check-pE" class="product-checkbox" hidden>
-                    <label for="check-pE" class="item-selector">
-                        <img src="images/unnamed.jpg" alt="Товар Д" class="product-thumb">
-                        <div class="item-details">
-                            <span class="item-name">Обьеденить фото</span>
-                            <span class="item-price">630 грн</span>
-                        </div>
-                    </label>
-                    <div class="quantity-control">
-                        <span class="qty-label">Кіл-ть:</span>
-                        <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
-                    </div>
-                </div>
-
-                <div class="product-item" data-id="p_F" data-name="Товар Е" data-price="190">
-                    <input type="checkbox" id="check-pF" class="product-checkbox" hidden>
-                    <label for="check-pF" class="item-selector">
-                        <img src="images/2.png" alt="Товар Е" class="product-thumb">
-                        <div class="item-details">
-                            <span class="item-name">Ланц1</span>
-                            <span class="item-price">190 грн</span>
-                        </div>
-                    </label>
-                    <div class="quantity-control">
-                        <span class="qty-label">Кіл-ть:</span>
-                        <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
-                    </div>
-                </div>
-
-                <div class="product-item" data-id="p_G" data-name="Товар Ж" data-price="140">
-                    <input type="checkbox" id="check-pG" class="product-checkbox" hidden>
-                    <label for="check-pG" class="item-selector">
-                        <img src="images/IMG_20250814_174620.jpg" alt="Товар Ж" class="product-thumb">
-                        <div class="item-details">
-                            <span class="item-name">Ланц2</span>
-                            <span class="item-price">140 грн</span>
-                        </div>
-                    </label>
-                    <div class="quantity-control">
-                        <span class="qty-label">Кіл-ть:</span>
-                        <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
-                    </div>
-                </div>
-
-                <div class="product-item" data-id="p_H" data-name="Товар З" data-price="290">
-                    <input type="checkbox" id="check-pH" class="product-checkbox" hidden>
-                    <label for="check-pH" class="item-selector">
-                        <img src="images/7.jpg" alt="Товар З" class="product-thumb">
-                        <div class="item-details">
-                            <span class="item-name">Ланц3</span>
-                            <span class="item-price">290 грн</span>
-                        </div>
-                    </label>
-                    <div class="quantity-control">
-                        <span class="qty-label">Кіл-ть:</span>
-                        <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
-                    </div>
-                </div>
-
-                <div class="product-item" data-id="p_I" data-name="Товар І" data-price="50">
-                    <input type="checkbox" id="check-pI" class="product-checkbox" hidden>
-                    <label for="check-pI" class="item-selector">
-                        <img src="images/1.jpg" alt="Товар І" class="product-thumb">
-                        <div class="item-details">
-                            <span class="item-name">Бампер</span>
-                            <span class="item-price">50 грн</span>
-                        </div>
-                    </label>
-                    <div class="quantity-control">
-                        <span class="qty-label">Кіл-ть:</span>
-                        <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
-                    </div>
-                </div>
-
-                <div class="product-item" data-id="p_J" data-name="Товар К" data-price="70">
-                    <input type="checkbox" id="check-pJ" class="product-checkbox" hidden>
-                    <label for="check-pJ" class="item-selector">
-                        <img src="images/8.jpg" alt="Товар К" class="product-thumb">
-                        <div class="item-details">
-                            <span class="item-name">Картон</span>
-                            <span class="item-price">70 грн</span>
-                        </div>
-                    </label>
-                    <div class="quantity-control">
-                        <span class="qty-label">Кіл-ть:</span>
-                        <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
-                    </div>
-                </div>
-
-                <div class="product-item" data-id="p_K" data-name="Товар Л" data-price="120">
-                    <input type="checkbox" id="check-pK" class="product-checkbox" hidden>
-                    <label for="check-pK" class="item-selector">
-                        <img src="images/4.jpg" alt="Товар Л" class="product-thumb">
-                        <div class="item-details">
-                            <span class="item-name">Пластик</span>
-                            <span class="item-price">120 грн</span>
-                        </div>
-                    </label>
-                    <div class="quantity-control">
-                        <span class="qty-label">Кіл-ть:</span>
-                        <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
-                    </div>
-                </div>
-
-                <div class="product-item" data-id="p_L" data-name="Брелок (0 грн)" data-price="0">
-    <input type="checkbox" id="check-pL" class="product-checkbox" hidden> 
-    <label for="check-pL" class="item-selector">
-        <img src="images/IMG_20250726_191345.png" alt="Брелок (0 грн)" class="product-thumb">
-        <div class="item-details">
-            <span class="item-name">Брелок (0 грн)</span>
-            <span class="item-price">0 грн</span>
-        </div>
-    </label>
-    <div class="quantity-control">
-        <span class="qty-label">Кіл-ть:</span>
-        <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
+    <div class="tabs-nav">
+        <button type="button" class="tab-btn active" data-tab="tab-jet">Жет.</button>
+        <button type="button" class="tab-btn" data-tab="tab-zap">Зап.</button>
+        <button type="button" class="tab-btn" data-tab="tab-brasl">Брасл.</button>
+        <button type="button" class="tab-btn" data-tab="tab-other">Інше</button>
     </div>
-</div>
-                
+
+    <div id="tab-jet" class="tab-content active">
+        
+        <div class="product-item" data-id="p_A" data-name="Товар А" data-price="550">
+            <input type="checkbox" id="check-pA" class="product-checkbox" hidden>
+            <label for="check-pA" class="item-selector">
+                <img src="images/fn.jpg" alt="Товар А" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">ФН</span>
+                    <span class="item-price">550 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
             </div>
-        </section>
+        </div>
+
+        <div class="product-item" data-id="p_B" data-name="Товар Б" data-price="450">
+            <input type="checkbox" id="check-pB" class="product-checkbox" hidden>
+            <label for="check-pB" class="item-selector">
+                <img src="images/nn.jpg" alt="Товар Б" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">НН</span>
+                    <span class="item-price">450 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
+            </div>
+        </div>
+
+        <div class="product-item" data-id="p_C" data-name="Товар В" data-price="390">
+            <input type="checkbox" id="check-pC" class="product-checkbox" hidden>
+            <label for="check-pC" class="item-selector">
+                <img src="images/n.jpg" alt="Товар В" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Н</span>
+                    <span class="item-price">390 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
+            </div>
+        </div>
+
+        <div class="product-item" data-id="p_D" data-name="Товар Г" data-price="650">
+            <input type="checkbox" id="check-pD" class="product-checkbox" hidden>
+            <label for="check-pD" class="item-selector">
+                <img src="images/ff.jpg" alt="Товар Г" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">ФФ</span>
+                    <span class="item-price">650 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
+            </div>
+        </div>
+
+        <div class="product-item" data-id="p_E" data-name="Товар Д" data-price="630">
+            <input type="checkbox" id="check-pE" class="product-checkbox" hidden>
+            <label for="check-pE" class="item-selector">
+                <img src="images/unnamed.jpg" alt="Товар Д" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Обьеденить фото</span>
+                    <span class="item-price">630 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
+            </div>
+        </div>
+
+        <div class="product-item" data-id="p_F" data-name="Товар Е" data-price="190">
+            <input type="checkbox" id="check-pF" class="product-checkbox" hidden>
+            <label for="check-pF" class="item-selector">
+                <img src="images/2.png" alt="Товар Е" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Ланц1</span>
+                    <span class="item-price">190 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
+            </div>
+        </div>
+
+        <div class="product-item" data-id="p_G" data-name="Товар Ж" data-price="140">
+            <input type="checkbox" id="check-pG" class="product-checkbox" hidden>
+            <label for="check-pG" class="item-selector">
+                <img src="images/IMG_20250814_174620.jpg" alt="Товар Ж" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Ланц2</span>
+                    <span class="item-price">140 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
+            </div>
+        </div>
+
+        <div class="product-item" data-id="p_H" data-name="Товар З" data-price="290">
+            <input type="checkbox" id="check-pH" class="product-checkbox" hidden>
+            <label for="check-pH" class="item-selector">
+                <img src="images/7.jpg" alt="Товар З" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Ланц3</span>
+                    <span class="item-price">290 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
+            </div>
+        </div>
+
+        <div class="product-item" data-id="p_I" data-name="Товар І" data-price="50">
+            <input type="checkbox" id="check-pI" class="product-checkbox" hidden>
+            <label for="check-pI" class="item-selector">
+                <img src="images/1.jpg" alt="Товар І" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Бампер</span>
+                    <span class="item-price">50 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
+            </div>
+        </div>
+
+        <div class="product-item" data-id="p_J" data-name="Товар К" data-price="70">
+            <input type="checkbox" id="check-pJ" class="product-checkbox" hidden>
+            <label for="check-pJ" class="item-selector">
+                <img src="images/8.jpg" alt="Товар К" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Картон</span>
+                    <span class="item-price">70 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
+            </div>
+        </div>
+
+        <div class="product-item" data-id="p_K" data-name="Товар Л" data-price="120">
+            <input type="checkbox" id="check-pK" class="product-checkbox" hidden>
+            <label for="check-pK" class="item-selector">
+                <img src="images/4.jpg" alt="Товар Л" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Пластик</span>
+                    <span class="item-price">120 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
+            </div>
+        </div>
+
+        <div class="product-item" data-id="p_L" data-name="Брелок (0 грн)" data-price="0">
+            <input type="checkbox" id="check-pL" class="product-checkbox" hidden>
+            <label for="check-pL" class="item-selector">
+                <img src="images/IMG_20250726_191345.png" alt="Брелок (0 грн)" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Брелок (0 грн)</span>
+                    <span class="item-price">0 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1" selected>1 шт.</option><option value="2">2 шт.</option><option value="3">3 шт.</option></select>
+            </div>
+        </div>
+
+    </div> <div id="tab-zap" class="tab-content">
+        <div class="product-item" data-id="p_Zap1" data-name="ЗапТест1" data-price="350">
+            <input type="checkbox" id="check-zap1" class="product-checkbox" hidden>
+            <label for="check-zap1" class="item-selector">
+                <img src="images/zap_nn.jpg" alt="Фото" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Зажигалка Тест 1</span>
+                    <span class="item-price">350 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1">1 шт.</option><option value="2">2 шт.</option></select>
+            </div>
+        </div>
+        <div class="product-item" data-id="p_Zap2" data-name="ЗапТест2" data-price="400">
+            <input type="checkbox" id="check-zap2" class="product-checkbox" hidden>
+            <label for="check-zap2" class="item-selector">
+                <img src="images/zap_n.jpg" alt="Фото" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Зажигалка Тест 2</span>
+                    <span class="item-price">400 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1">1 шт.</option><option value="2">2 шт.</option></select>
+            </div>
+        </div>
+        <div class="product-item" data-id="p_Zap3" data-name="ЗапТест3" data-price="900">
+            <input type="checkbox" id="check-zap3" class="product-checkbox" hidden>
+            <label for="check-zap3" class="item-selector">
+                <img src="images/zap_fn.jpg" alt="Фото" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Зажигалка Тест 3</span>
+                    <span class="item-price">900 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1">1 шт.</option><option value="2">2 шт.</option></select>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-brasl" class="tab-content">
+        <div class="product-item" data-id="p_Brasl1" data-name="БраслТест1" data-price="200">
+            <input type="checkbox" id="check-brasl1" class="product-checkbox" hidden>
+            <label for="check-brasl1" class="item-selector">
+                <img src="images/1.jpg" alt="Фото" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Браслет Тест 1</span>
+                    <span class="item-price">200 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1">1 шт.</option><option value="2">2 шт.</option></select>
+            </div>
+        </div>
+        <div class="product-item" data-id="p_Brasl2" data-name="БраслТест2" data-price="250">
+            <input type="checkbox" id="check-brasl2" class="product-checkbox" hidden>
+            <label for="check-brasl2" class="item-selector">
+                <img src="images/1.jpg" alt="Фото" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Браслет Тест 2</span>
+                    <span class="item-price">250 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1">1 шт.</option><option value="2">2 шт.</option></select>
+            </div>
+        </div>
+        <div class="product-item" data-id="p_Brasl3" data-name="БраслТест3" data-price="300">
+            <input type="checkbox" id="check-brasl3" class="product-checkbox" hidden>
+            <label for="check-brasl3" class="item-selector">
+                <img src="images/1.jpg" alt="Фото" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Браслет Тест 3</span>
+                    <span class="item-price">300 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1">1 шт.</option><option value="2">2 шт.</option></select>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab-other" class="tab-content">
+        <div class="product-item" data-id="p_Other1" data-name="ИншеТест1" data-price="100">
+            <input type="checkbox" id="check-other1" class="product-checkbox" hidden>
+            <label for="check-other1" class="item-selector">
+                <img src="images/2.png" alt="Фото" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Другое Тест 1</span>
+                    <span class="item-price">100 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1">1 шт.</option><option value="2">2 шт.</option></select>
+            </div>
+        </div>
+        <div class="product-item" data-id="p_Other2" data-name="ИншеТест2" data-price="150">
+            <input type="checkbox" id="check-other2" class="product-checkbox" hidden>
+            <label for="check-other2" class="item-selector">
+                <img src="images/2.png" alt="Фото" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Другое Тест 2</span>
+                    <span class="item-price">150 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1">1 шт.</option><option value="2">2 шт.</option></select>
+            </div>
+        </div>
+        <div class="product-item" data-id="p_Other3" data-name="ИншеТест3" data-price="200">
+            <input type="checkbox" id="check-other3" class="product-checkbox" hidden>
+            <label for="check-other3" class="item-selector">
+                <img src="images/2.png" alt="Фото" class="product-thumb">
+                <div class="item-details">
+                    <span class="item-name">Другое Тест 3</span>
+                    <span class="item-price">200 грн</span>
+                </div>
+            </label>
+            <div class="quantity-control">
+                <span class="qty-label">Кіл-ть:</span>
+                <select class="quantity-select" disabled><option value="1">1 шт.</option><option value="2">2 шт.</option></select>
+            </div>
+        </div>
+    </div>
+
+</section>
 
        <section class="client-data">
     <h2>Дані та Оплата</h2>
