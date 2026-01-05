@@ -1,4 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- ЛОГИКА ВКЛАДОК (TABS) ---
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 1. Убираем активность у всех кнопок и вкладок
+            tabButtons.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+
+            // 2. Активируем нажатую кнопку
+            btn.classList.add('active');
+
+            // 3. Показываем нужную вкладку (берем ID из data-tab)
+            const tabId = btn.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
     // 🚨🚨🚨 УБЕДИТЕСЬ, ЧТО ЗДЕСЬ ВАШ ПРАВИЛЬНЫЙ URL ОТ CLOUDFLARE 🚨🚨🚨
     const WORKER_URL = 'https://crm-facebook.brelok2023.workers.dev';
 
