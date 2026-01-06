@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         productList.addEventListener('change', handleProductInteraction);
         extraChargeInput.addEventListener('input', updateTotalSummary);
         paymentOptions.addEventListener('change', (e) => {
-            if (e.target.name === 'paymentMethod') {
+            if (e.target.name === 'payment') {
                 if (customPrepaymentRadio.checked) {
                     customPrepaymentInput.disabled = false;
                     customPrepaymentInput.focus();
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sendButton.disabled = !hasItems;
     }
 
-    // --- Функция отправки формы ---
+   // --- Функция отправки формы (ИСПРАВЛЕННАЯ) ---
     async function submitForm(e) {
         e.preventDefault();
         sendButton.disabled = true;
@@ -129,7 +129,11 @@ document.addEventListener('DOMContentLoaded', () => {
         statusMessage.textContent = '';
 
         const clientFacebook = document.getElementById('clientFacebook').value.trim();
-        const isUrgent = document.getElementById('isUrgent').checked;
+        
+        // 1. ИСПРАВЛЕНИЕ: Ищем чекбокс по ID 'markRed' (как в новом HTML)
+        const markRedCheckbox = document.getElementById('markRed');
+        const isUrgent = markRedCheckbox ? markRedCheckbox.checked : false;
+
         const mainItems = [], extraItems = [];
         
         document.querySelectorAll('.product-item.selected').forEach(item => {
@@ -140,21 +144,33 @@ document.addEventListener('DOMContentLoaded', () => {
             else extraItems.push(...arr);
         });
 
-        const paymentMethodRadio = form.querySelector('input[name="paymentMethod"]:checked');
+        // Ищем выбранную оплату (name="payment" как в новом HTML)
+        const paymentMethodRadio = form.querySelector('input[name="payment"]:checked');
+
         if (!clientFacebook || !paymentMethodRadio) {
             showError('Будь ласка, заповніть Нік та оберіть метод оплати.');
             return;
         }
 
+        // 2. ИСПРАВЛЕНИЕ: Логика для 150 и 250 грн
         let prepaymentAmount = 0;
         const totalAmount = parseFloat(totalSummaryEl.textContent.match(/[\d\.]+/)[0]);
-        if (paymentMethodRadio.id === 'payment-prepay') prepaymentAmount = 150;
-        else if (paymentMethodRadio.id === 'payment-full') prepaymentAmount = totalAmount;
-        else if (paymentMethodRadio.id === 'payment-custom') prepaymentAmount = parseFloat(customPrepaymentInput.value) || 0;
+        
+        // Проверяем ID кнопки (они должны совпадать с HTML)
+        if (paymentMethodRadio.id === 'payment-prepay150') {
+            prepaymentAmount = 150;
+        } else if (paymentMethodRadio.id === 'payment-prepay250') { // Добавили 250
+            prepaymentAmount = 250;
+        } else if (paymentMethodRadio.id === 'payment-full') {
+            prepaymentAmount = totalAmount;
+        } else if (paymentMethodRadio.id === 'payment-custom') {
+            prepaymentAmount = parseFloat(customPrepaymentInput.value) || 0;
+        }
 
+        // 3. Формируем PAYLOAD (как у тебя и было)
         const payload = {
             Ник: clientFacebook,
-            isUrgent: isUrgent,
+            isUrgent: isUrgent, // Передаем true/false для красного цвета
             Заказ_жетон: mainItems.join('+') || '-',
             Доп_товары: extraItems.join('+') || '-',
             Предоплата: prepaymentAmount,
@@ -172,7 +188,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (result.status === 'success') {
                 showSuccess(`✅ Замовлення успішно відправлено! Рядок: ${result.row_added}`);
                 form.reset();
-                document.querySelectorAll('.product-item').forEach(item => updateItemState(item));
+                // Сбрасываем выбор товаров
+                document.querySelectorAll('.product-item').forEach(item => {
+                    item.querySelector('.product-checkbox').checked = false; 
+                    updateItemState(item);
+                });
                 updateTotalSummary();
                 customPrepaymentInput.disabled = true;
             } else {
