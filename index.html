@@ -342,14 +342,16 @@
 
 </section>
 
-       <section class="client-data">
+    <section class="client-data">
     <h2>Дані та Оплата</h2>
+    
     <div class="input-group required">
         <label for="clientFacebook"><i class="fab fa-facebook-f"></i> Нік Facebook*</label>
         <div class="facebook-input-wrapper">
             <input type="text" id="clientFacebook" placeholder="Ім'я або @нікнейм" required>
-            <label for="isUrgent" class="urgent-toggle">
-                <input type="checkbox" id="isUrgent">
+            
+            <label for="markRed" class="urgent-toggle">
+                <input type="checkbox" id="markRed">
                 <span class="urgent-label" title="Позначити терміновим (!)">🚨</span>
             </label>
         </div>
@@ -357,35 +359,46 @@
 
     <div class="payment-options">
         <h3 class="payment-title">Метод оплати:</h3>
-       <div class="radio-group">
-    <label>
-        <input type="radio" id="payment-prepay" name="paymentMethod" value="Предоплата 150 грн" required>
-        Предоплата 150 грн
-    </label>
-    <label>
-        <input type="radio" id="payment-full" name="paymentMethod" value="Повна оплата">
-        Повна оплата
-    </label>
-    <label>
-        <input type="radio" id="payment-cod" name="paymentMethod" value="Накладений платіж">
-        Накладений платіж
-    </label>
-    <label>
-        <input type="radio" id="payment-custom" name="paymentMethod" value="custom">
-        Друга сума:
-        <input type="number" id="customPrepaymentAmount" placeholder="сума" disabled style="width: 100px; margin-left: 8px; padding: 5px;">
-    </label>
-</div>
+        <div class="radio-group">
+            
+            <label>
+                <input type="radio" id="payment-prepay150" name="payment" value="Передплата 150 грн" required checked>
+                Передплата 150 грн
+            </label>
+
+            <label>
+                <input type="radio" id="payment-prepay250" name="payment" value="Передплата 250 грн">
+                Передплата 250 грн
+            </label>
+
+            <label>
+                <input type="radio" id="payment-cod" name="payment" value="Накладений платіж">
+                Накладений платіж
+            </label>
+
+            <label>
+                <input type="radio" id="payment-full" name="payment" value="Повна оплата">
+                Повна оплата
+            </label>
+
+            <label>
+                <input type="radio" id="payment-custom" name="payment" value="custom">
+                Друга сума:
+                <input type="number" id="customPrepaymentAmount" placeholder="сума" disabled style="width: 100px; margin-left: 8px; padding: 5px;">
+            </label>
+        </div>
+    </div>
 
     <div class="input-group">
         <input type="number" id="extraCharge" placeholder="Доп. Доходи">
     </div>
+
     <div class="input-group">
         <input type="text" id="orderComment" placeholder="Коментарий (будет в статусе)">
     </div>
-    </section>
+</section>
 
-        <section class="summary-and-send">
+<section class="summary-and-send">
     <h3 id="totalSummary">Загальна Сума: 0.00 грн</h3>
     <button type="submit" id="sendOrderBtn" class="cta-button">
         <i class="fas fa-paper-plane"></i> Сформувати Замовлення
