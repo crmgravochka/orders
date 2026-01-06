@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- НОВЫЕ ТЕСТОВЫЕ БРАСЛЕТЫ (Для вкладки "Брасл.") ---
         // Было false, стало true 👇
-        'p_Brasl1': { name: 'БраслТест1', is_main: true }, 
+        'p_Brasl1': { name: 'БрасШкіра', is_main: true }, 
         'p_Brasl2': { name: 'БраслТест2', is_main: true },
         'p_Brasl3': { name: 'БраслТест3', is_main: true },
 
