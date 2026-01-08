@@ -26,14 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const extraChargeInput = document.getElementById('extraCharge');
     const orderCommentInput = document.getElementById('orderComment');
     
+    // Элементы для ССЫЛКИ (Новые)
+    const linkContainer = document.getElementById('orderLinkContainer');
+    const linkInput = document.getElementById('generatedLink');
+    const copyBtn = document.getElementById('copyLinkBtn');
+    const copyFeedback = document.getElementById('copyFeedback');
+    
     // Группа радио-кнопок
     const paymentOptionsContainer = document.querySelector('.radio-group');
     const customPrepaymentInput = document.getElementById('customPrepaymentAmount');
     const customPrepaymentRadio = document.getElementById('payment-custom');
 
     // 4. --- СПИСОК ТОВАРОВ ---
-    // is_main: true -> падает в столбец "Заказ/Жетон" (D)
-    // is_main: false -> падает в столбец "Доп. товары" (E)
     const PRODUCT_MAP = {
         // Жетоны
         'p_A': { name: 'ФН', is_main: true },
@@ -50,17 +54,17 @@ document.addEventListener('DOMContentLoaded', () => {
         'p_K': { name: 'Пластик', is_main: false },
         'p_L': { name: 'Брелок0', is_main: false },
         
-        // Зажигалки (Вкладка "Зап.") -> Главные
+        // Зажигалки
         'p_Zap1': { name: 'ЗапН', is_main: true },
         'p_Zap2': { name: 'ЗапНН', is_main: true },
         'p_Zap3': { name: 'ЗапФН', is_main: true },
 
-        // Браслеты (Вкладка "Брасл.") -> ИСПРАВИЛ НА TRUE (теперь падают к жетонам)
+        // Браслеты
         'p_Brasl1': { name: 'БрасШкіра', is_main: true }, 
         'p_Brasl2': { name: 'БраслТест2', is_main: true },
         'p_Brasl3': { name: 'БраслТест3', is_main: true },
 
-        // Другое (Вкладка "Інше") -> Дополнительные
+        // Другое
         'p_Other1': { name: 'ИншеТест1', is_main: true },
         'p_Other2': { name: 'ИншеТест2', is_main: true },
         'p_Other3': { name: 'ИншеТест3', is_main: true },
@@ -84,6 +88,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+        
+        // Логика кнопки КОПИРОВАТЬ
+        if(copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                if(!linkInput.value) return;
+                
+                linkInput.select();
+                linkInput.setSelectionRange(0, 99999); // Для мобилок
+                
+                navigator.clipboard.writeText(linkInput.value).then(() => {
+                    copyFeedback.style.display = 'block';
+                    setTimeout(() => { copyFeedback.style.display = 'none'; }, 2000);
+                });
+            });
+        }
     }
 
     // Обработка кликов по товарам
@@ -127,25 +146,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- ГЕНЕРАТОР УНИКАЛЬНОГО ID ЗАКАЗА ---
     function generateOrderId() {
-        // Генерирует что-то типа "ORD-839210"
         return 'ORD-' + Math.floor(100000 + Math.random() * 900000);
     }
 
     // 6. --- ОТПРАВКА ФОРМЫ ---
     async function submitForm(e) {
         e.preventDefault();
+        
+        // Скрываем прошлую ссылку при новой отправке
+        if(linkContainer) linkContainer.style.display = 'none';
+        
         sendButton.disabled = true;
         sendButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Відправка...';
         statusMessage.textContent = '';
 
-        // Получаем Ник
         const clientFacebook = document.getElementById('clientFacebook').value.trim();
-        
-        // Получаем "Сирену" (Важное)
         const markRedCheckbox = document.getElementById('markRed');
         const isUrgent = markRedCheckbox ? markRedCheckbox.checked : false;
 
-        // Собираем товары
         const mainItems = [], extraItems = [];
         document.querySelectorAll('.product-item.selected').forEach(item => {
             const info = PRODUCT_MAP[item.dataset.id];
@@ -155,7 +173,6 @@ document.addEventListener('DOMContentLoaded', () => {
             else extraItems.push(...arr);
         });
 
-        // Ищем выбранную оплату
         const paymentMethodRadio = form.querySelector('input[name="payment"]:checked');
 
         if (!clientFacebook || !paymentMethodRadio) {
@@ -163,7 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Расчет предоплаты
         let prepaymentAmount = 0;
         const totalAmount = parseFloat(totalSummaryEl.textContent.match(/[\d\.]+/)[0]);
         
@@ -177,12 +193,11 @@ document.addEventListener('DOMContentLoaded', () => {
             prepaymentAmount = parseFloat(customPrepaymentInput.value) || 0;
         }
 
-        // Генерируем новый ID для этого заказа
+        // Генерируем ID
         const currentOrderId = generateOrderId();
 
-        // Формируем данные для отправки (payload)
         const payload = {
-            order_id: currentOrderId, // <--- НОВОЕ ПОЛЕ! (Полетит в столбец AG)
+            order_id: currentOrderId, 
             Ник: clientFacebook,
             isUrgent: isUrgent,      
             Заказ_жетон: mainItems.join('+') || '-',
@@ -201,21 +216,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
             
             if (result.status === 'success') {
-                // Пока просто показываем ID, позже тут будет ссылка
                 showSuccess(`✅ Заказ ID: ${currentOrderId} створено!`); 
                 
-                form.reset();
+                // --- ЛОГИКА ОТОБРАЖЕНИЯ ССЫЛКИ ---
+                if(linkContainer && linkInput) {
+                    const fullLink = `https://dostavkagravochka.github.io/index.html?id=${currentOrderId}`;
+                    linkInput.value = fullLink;
+                    linkContainer.style.display = 'block'; // Показываем блок
+                }
                 
-                // Сброс товаров
+                form.reset();
                 document.querySelectorAll('.product-item').forEach(item => {
                     item.querySelector('.product-checkbox').checked = false; 
                     updateItemState(item);
                 });
                 
                 if(markRedCheckbox) markRedCheckbox.checked = false;
-
                 updateTotalSummary();
                 customPrepaymentInput.disabled = true;
+
             } else {
                 showError(`❌ Помилка: ${result.message || 'Невідома помилка сервера.'}`);
             }
@@ -225,7 +244,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Вспомогательные функции ---
     function showError(message) {
         statusMessage.textContent = message;
         statusMessage.style.color = 'red';
@@ -237,11 +255,13 @@ document.addEventListener('DOMContentLoaded', () => {
         statusMessage.textContent = message;
         statusMessage.style.color = '#007bff';
         sendButton.disabled = false;
-        sendButton.innerHTML = '<i class="fas fa-paper-plane"></i> Сформувати Замовлення';
-        setTimeout(() => statusMessage.textContent = '', 7000);
+        sendButton.innerHTML = '<i class="fas fa-check"></i> Замовлення відправлено';
+        setTimeout(() => { 
+            // Возвращаем кнопку в исходное состояние через 5 сек
+            sendButton.innerHTML = '<i class="fas fa-paper-plane"></i> Сформувати Замовлення';
+        }, 5000);
     }
 
-    // --- ЗАПУСК ---
     form.addEventListener('submit', submitForm);
     setupEventListeners();
     updateTotalSummary();
