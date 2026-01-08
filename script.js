@@ -215,13 +215,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const result = await response.json();
             
-            if (result.status === 'success') {
+          if (result.status === 'success') {
                 showSuccess(`✅ Заказ ID: ${currentOrderId} створено!`); 
                 
-                // 1. СНАЧАЛА ОЧИЩАЕМ ФОРМУ
+                // 1. СНАЧАЛА ОЧИЩАЕМ ВСЁ
                 form.reset();
                 
-                // Сброс галочек и списка
+                // Сброс галочек
                 document.querySelectorAll('.product-item').forEach(item => {
                     item.querySelector('.product-checkbox').checked = false; 
                     updateItemState(item);
@@ -230,12 +230,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 customPrepaymentInput.disabled = true;
                 updateTotalSummary();
 
-                // 2. И ТОЛЬКО ПОТОМ ВСТАВЛЯЕМ ССЫЛКУ (чтобы она не стерлась)
-                if(linkContainer && linkInput) {
-                    const fullLink = `https://dostavkagravochka.github.io/index.html?id=${currentOrderId}`;
-                    linkInput.value = fullLink;
-                    linkContainer.style.display = 'block'; // Показываем блок
-                }
+                // 2. ПАУЗА 100мс ПЕРЕД ВСТАВКОЙ (ЧТОБЫ НАВЕРНЯКА)
+                setTimeout(() => {
+                    if(linkContainer && linkInput) {
+                        const fullLink = `https://dostavkagravochka.github.io/index.html?id=${currentOrderId}`;
+                        linkInput.value = fullLink;
+                        linkContainer.style.display = 'block'; // Показываем блок
+                    } else {
+                        console.error("ОШИБКА: Не найдены элементы linkContainer или linkInput в HTML!");
+                    }
+                }, 100);
 
             } else {
                 showError(`❌ Помилка: ${result.message || 'Невідома помилка сервера.'}`);
