@@ -262,3 +262,60 @@ input[type="text"] {
     from { opacity: 0; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+
+/* --- СТИЛИ ДЛЯ БЛОКА С ССЫЛКОЙ --- */
+.link-result-box {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e3f2fd; /* Светло-голубой фон */
+    border: 2px solid #2196f3; /* Синяя рамка */
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeIn 0.5s;
+}
+
+.link-label {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.link-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+#generatedLink {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    color: #333;
+    font-size: 14px;
+    font-family: monospace; /* Чтобы ссылка смотрелась как код */
+}
+
+#copyLinkBtn {
+    padding: 10px 15px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+}
+
+#copyLinkBtn:hover {
+    background-color: #0b7dda;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
