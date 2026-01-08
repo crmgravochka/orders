@@ -218,22 +218,24 @@ document.addEventListener('DOMContentLoaded', () => {
             if (result.status === 'success') {
                 showSuccess(`✅ Заказ ID: ${currentOrderId} створено!`); 
                 
-                // --- ЛОГИКА ОТОБРАЖЕНИЯ ССЫЛКИ ---
+                // 1. СНАЧАЛА ОЧИЩАЕМ ФОРМУ
+                form.reset();
+                
+                // Сброс галочек и списка
+                document.querySelectorAll('.product-item').forEach(item => {
+                    item.querySelector('.product-checkbox').checked = false; 
+                    updateItemState(item);
+                });
+                if(markRedCheckbox) markRedCheckbox.checked = false;
+                customPrepaymentInput.disabled = true;
+                updateTotalSummary();
+
+                // 2. И ТОЛЬКО ПОТОМ ВСТАВЛЯЕМ ССЫЛКУ (чтобы она не стерлась)
                 if(linkContainer && linkInput) {
                     const fullLink = `https://dostavkagravochka.github.io/index.html?id=${currentOrderId}`;
                     linkInput.value = fullLink;
                     linkContainer.style.display = 'block'; // Показываем блок
                 }
-                
-                form.reset();
-                document.querySelectorAll('.product-item').forEach(item => {
-                    item.querySelector('.product-checkbox').checked = false; 
-                    updateItemState(item);
-                });
-                
-                if(markRedCheckbox) markRedCheckbox.checked = false;
-                updateTotalSummary();
-                customPrepaymentInput.disabled = true;
 
             } else {
                 showError(`❌ Помилка: ${result.message || 'Невідома помилка сервера.'}`);
