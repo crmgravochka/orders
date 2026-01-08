@@ -406,6 +406,16 @@
 </section>
 
         <div id="statusMessage" class="status-message"></div>
+        <div id="orderLinkContainer" class="link-result-box" style="display: none;">
+            <p class="link-label">Строка прошлого заказа (для клиента):</p>
+            <div class="link-wrapper">
+                <input type="text" id="generatedLink" readonly>
+                <button type="button" id="copyLinkBtn" title="Копировать">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+            <span id="copyFeedback" style="font-size: 12px; color: green; display: none; margin-top:5px;">Скопировано в буфер!</span>
+        </div>
     </form>
 
     <script src="script.js"></script>
