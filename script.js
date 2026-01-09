@@ -230,11 +230,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 customPrepaymentInput.disabled = true;
                 updateTotalSummary();
 
-                // 2. ПАУЗА 100мс ПЕРЕД ВСТАВКОЙ (ЧТОБЫ НАВЕРНЯКА)
+              // 2. ПАУЗА 100мс ПЕРЕД ВСТАВКОЙ (ЧТОБЫ НАВЕРНЯКА)
                 setTimeout(() => {
                     if(linkContainer && linkInput) {
                         const fullLink = `https://dostavkagravochka.github.io/index.html?id=${currentOrderId}`;
-                        linkInput.value = fullLink;
+                        
+                        // --- ИЗМЕНЕНИЯ ЗДЕСЬ ---
+                        // Добавляем текст перед ссылкой
+                        const messageText = "Заповніть будь-ласка тут, дані для доставки: ";
+                        
+                        // Склеиваем текст и ссылку и кладем в поле
+                        linkInput.value = messageText + fullLink; 
+                        // -----------------------
+
                         linkContainer.style.display = 'block'; // Показываем блок
                     } else {
                         console.error("ОШИБКА: Не найдены элементы linkContainer или linkInput в HTML!");
