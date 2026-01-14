@@ -319,3 +319,32 @@ input[type="text"] {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* --- СТИЛІ ДЛЯ СЕКРЕТНОЇ КНОПКИ --- */
+
+/* Робимо блок товарів "якірним", щоб кнопка була всередині нього */
+#productList {
+    position: relative;
+}
+
+/* Сама кнопка */
+.ghost-btn-card {
+    position: absolute; /* Позиція всередині картки */
+    top: 25px;          /* Відступ зверху (на рівні заголовка) */
+    right: 20px;        /* Відступ справа */
+    width: 40px;        /* Ширина */
+    height: 40px;       /* Висота */
+    background-color: white;
+    border-radius: 50%; /* Робимо круглою */
+    cursor: pointer;
+    z-index: 10;        /* Щоб була поверх тексту */
+    
+    /* Налаштування видимості */
+    opacity: 0.1;       /* 0.1 - ледве видно. Постав 0, щоб сховати повністю */
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* При наведенні мишки стає яскравішою */
+.ghost-btn-card:hover {
+    opacity: 0.5;
+}
