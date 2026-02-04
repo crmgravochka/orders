@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'ORD-' + Math.floor(100000 + Math.random() * 900000);
     }
 
-    // 6. --- ОТПРАВКА ФОРМЫ ---
+// 6. --- ОТПРАВКА ФОРМЫ ---
     async function submitForm(e) {
         e.preventDefault();
         
@@ -161,6 +161,11 @@ document.addEventListener('DOMContentLoaded', () => {
         statusMessage.textContent = '';
 
         const clientFacebook = document.getElementById('clientFacebook').value.trim();
+        
+        // 👇👇👇 1. БЕРЕМО ЗНАЧЕННЯ ID З НОВОГО ПОЛЯ 👇👇👇
+        const clientFbId = document.getElementById('clientFbId').value.trim(); // <--- НОВЕ
+        // 👆👆👆
+
         const markRedCheckbox = document.getElementById('markRed');
         const isUrgent = markRedCheckbox ? markRedCheckbox.checked : false;
 
@@ -199,6 +204,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const payload = {
             order_id: currentOrderId, 
             Ник: clientFacebook,
+            
+            // 👇👇👇 2. ДОДАЄМО ID У ВІДПРАВКУ 👇👇👇
+            fb_id: clientFbId, // <--- НОВЕ (це поле полетить у Google Script)
+            // 👆👆👆
+            
             isUrgent: isUrgent,      
             Заказ_жетон: mainItems.join('+') || '-',
             Доп_товары: extraItems.join('+') || '-',
@@ -213,6 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
+            // ... далі код без змін ...
             const result = await response.json();
             
           if (result.status === 'success') {
