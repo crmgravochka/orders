@@ -61,13 +61,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Браслеты
         'p_Brasl1': { name: 'БрасШкіра', is_main: true }, 
-        'p_Brasl2': { name: 'БраслТест2', is_main: true },
-        'p_Brasl3': { name: 'БраслТест3', is_main: true },
+        'p_BrasChElit': { name: 'БрасЧ.Еліт', is_main: true },
+        'p_BrasShirPlet': { name: 'БрасШирокийПлет', is_main: true },
+        'p_BrasKorTabPlet': { name: 'БрасЧ.КоротТабл', is_main: true },
+        'p_BrasZhenskSer': { name: 'БрасЖенскСер', is_main: true },
+        'p_BrasZhenskChornTab': { name: 'БрасЖенскЧорнТабл', is_main: true },
+        'p_BrasZhenskChornPoln': { name: 'БрасЖенскЧорнПолност', is_main: true },
+        'p_BrasLanc': { name: 'БрасЛанц', is_main: true },
+        'p_BrasPletByudzh': { name: 'БрасПлетБюджет', is_main: true },
 
         // Другое
-        'p_Other1': { name: 'ИншеТест1', is_main: true },
-        'p_Other2': { name: 'ИншеТест2', is_main: true },
-        'p_Other3': { name: 'ИншеТест3', is_main: true },
+        'p_KoshelKozha': { name: 'КошельКожа', is_main: true },
+        'p_Prilad': { name: 'Прилад', is_main: false },
+        'p_KorobkaBras': { name: 'КоробкаБрасЧБ', is_main: false },
+        'p_KorobkaKoshel': { name: 'КоробкаКошель', is_main: false },
+        'p_Zakupka': { name: 'Закупка', is_main: true }
     };
 
     // 5. --- СЛУШАТЕЛИ СОБЫТИЙ ---
@@ -149,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'ORD-' + Math.floor(100000 + Math.random() * 900000);
     }
 
-// 6. --- ОТПРАВКА ФОРМЫ ---
+    // 6. --- ОТПРАВКА ФОРМЫ ---
     async function submitForm(e) {
         e.preventDefault();
         
@@ -163,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const clientFacebook = document.getElementById('clientFacebook').value.trim();
         
         // 👇👇👇 1. БЕРЕМО ЗНАЧЕННЯ ID З НОВОГО ПОЛЯ 👇👇👇
-        const clientFbId = document.getElementById('clientFbId').value.trim(); // <--- НОВЕ
+        const clientFbId = document.getElementById('clientFbId').value.trim(); 
         // 👆👆👆
 
         const markRedCheckbox = document.getElementById('markRed');
@@ -172,6 +180,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const mainItems = [], extraItems = [];
         document.querySelectorAll('.product-item.selected').forEach(item => {
             const info = PRODUCT_MAP[item.dataset.id];
+            // Защита от ошибки, если товара нет в PRODUCT_MAP
+            if(!info) return; 
+
             const qty = parseInt(item.querySelector('.quantity-select').value);
             const arr = Array(qty).fill(info.name);
             if (info.is_main) mainItems.push(...arr);
@@ -206,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Ник: clientFacebook,
             
             // 👇👇👇 2. ДОДАЄМО ID У ВІДПРАВКУ 👇👇👇
-            fb_id: clientFbId, // <--- НОВЕ (це поле полетить у Google Script)
+            fb_id: clientFbId, 
             // 👆👆👆
             
             isUrgent: isUrgent,      
@@ -223,7 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-            // ... далі код без змін ...
             const result = await response.json();
             
           if (result.status === 'success') {
