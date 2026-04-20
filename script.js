@@ -75,7 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'p_Prilad': { name: 'Прилад', is_main: false },
         'p_KorobkaBras': { name: 'КоробкаБрасЧБ', is_main: false },
         'p_KorobkaKoshel': { name: 'КоробкаКошель', is_main: false },
-        'p_Zakupka': { name: 'Закупка', is_main: true }
+        'p_Zakupka': { name: 'Закупка', is_main: true },
+        'p_glaza': { name: 'ОчіФН', is_main: true },
     };
 
     // 5. --- СЛУШАТЕЛИ СОБЫТИЙ ---
