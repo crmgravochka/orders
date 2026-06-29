@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. --- НАСТРОЙКИ ---
     const WORKER_URL = 'https://crm-facebook.brelok2023.workers.dev';
+    const BOT_URL = 'https://gravikfruktbot73-258d02b2196e.herokuapp.com';
 
     // 3. --- ЭЛЕМЕНТЫ ФОРМЫ ---
     const form = document.getElementById('crmOrderForm');
@@ -112,6 +113,60 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         }
+
+        // --- Логіка попапу з останніми повідомленнями ---
+        const recentMsgsBtn = document.getElementById('recentMsgsBtn');
+        const recentMsgsPopup = document.getElementById('recentMsgsPopup');
+        const closePopupBtn = document.getElementById('closePopupBtn');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const recentMsgsList = document.getElementById('recentMsgsList');
+        const clientFbIdInput = document.getElementById('clientFbId');
+
+        function openRecentPopup() {
+            recentMsgsPopup.style.display = 'block';
+            popupOverlay.style.display = 'block';
+            recentMsgsList.innerHTML = '<p class="popup-loading">Завантаження...</p>';
+            
+            fetch(`${BOT_URL}/recent-messages`)
+                .then(r => r.json())
+                .then(messages => {
+                    if (!messages || messages.length === 0) {
+                        recentMsgsList.innerHTML = '<p class="popup-loading">Поки немає повідомлень</p>';
+                        return;
+                    }
+                    recentMsgsList.innerHTML = messages.map(msg => `
+                        <div class="popup-msg-item" data-id="${msg.id}">
+                            <span class="popup-msg-time">${msg.time}</span>
+                            <span class="popup-msg-text">${escapeHtml(msg.text)}</span>
+                            <span class="popup-msg-id">${msg.id.slice(-6)}</span>
+                        </div>
+                    `).join('');
+                    
+                    // Клік по повідомленню — вставляємо ID
+                    recentMsgsList.querySelectorAll('.popup-msg-item').forEach(item => {
+                        item.addEventListener('click', () => {
+                            clientFbIdInput.value = item.dataset.id;
+                            closeRecentPopup();
+                        });
+                    });
+                })
+                .catch(() => {
+                    recentMsgsList.innerHTML = '<p class="popup-error">Помилка з\'єднання з ботом</p>';
+                });
+        }
+
+        function closeRecentPopup() {
+            recentMsgsPopup.style.display = 'none';
+            popupOverlay.style.display = 'none';
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        }
+
+        if (recentMsgsBtn) recentMsgsBtn.addEventListener('click', openRecentPopup);
+        if (closePopupBtn) closePopupBtn.addEventListener('click', closeRecentPopup);
+        if (popupOverlay) popupOverlay.addEventListener('click', closeRecentPopup);
     }
 
     // Обработка кликов по товарам
@@ -237,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const result = await response.json();
             
-          if (result.status === 'success') {
+            if (result.status === 'success') {
                 showSuccess(`✅ Заказ ID: ${currentOrderId} створено!`); 
                 
                 // 1. СНАЧАЛА ОЧИЩАЕМ ВСЁ
@@ -252,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 customPrepaymentInput.disabled = true;
                 updateTotalSummary();
 
-              // 2. ПАУЗА 100мс ПЕРЕД ВСТАВКОЙ (ЧТОБЫ НАВЕРНЯКА)
+                // 2. ПАУЗА 100мс ПЕРЕД ВСТАВКОЙ (ЧТОБЫ НАВЕРНЯКА)
                 setTimeout(() => {
                     if(linkContainer && linkInput) {
                         const fullLink = `https://dostavkagravochka.github.io/index.html?id=${currentOrderId}`;
