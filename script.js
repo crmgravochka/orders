@@ -233,6 +233,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const markRedCheckbox = document.getElementById('markRed');
         const isUrgent = markRedCheckbox ? markRedCheckbox.checked : false;
 
+        const markInstCheckbox = document.getElementById('markInst');
+        const isInst = markInstCheckbox ? markInstCheckbox.checked : false;
+
+
         const mainItems = [], extraItems = [];
         document.querySelectorAll('.product-item.selected').forEach(item => {
             const info = PRODUCT_MAP[item.dataset.id];
@@ -270,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const payload = {
             order_id: currentOrderId, 
-            Ник: clientFacebook,
+            Ник: isInst ? `inst ${clientFacebook}` : clientFacebook,
             
             // 👇👇👇 2. ДОДАЄМО ID У ВІДПРАВКУ 👇👇👇
             fb_id: clientFbId, 
@@ -304,6 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     updateItemState(item);
                 });
                 if(markRedCheckbox) markRedCheckbox.checked = false;
+                if(markInstCheckbox) markInstCheckbox.checked = false;
                 customPrepaymentInput.disabled = true;
                 updateTotalSummary();
 
