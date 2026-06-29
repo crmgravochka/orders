@@ -513,11 +513,29 @@
         <input type="text" id="orderComment" placeholder="Коментарий (будет в статусе)">
     </div>
     <div class="input-group">
-        <label for="clientFbId" style="font-size: 12px; color: #817f7f; display: block; margin-bottom: 5px;">
-            <i class="fab fa-facebook-messenger"></i> ID клієнта (для бота):
-        </label>
+    <label for="clientFbId" style="font-size: 12px; color: #817f7f; display: block; margin-bottom: 5px;">
+        <i class="fab fa-facebook-messenger"></i> ID клієнта (для бота):
+    </label>
+    <div class="fb-id-wrapper">
         <input type="text" id="clientFbId" placeholder="Вставте сюди цифри (напр. 82680...)" inputmode="numeric">
+        <button type="button" id="recentMsgsBtn" title="Останні повідомлення">
+            <i class="fab fa-facebook-messenger"></i>
+        </button>
     </div>
+</div>
+ 
+<!-- Попап з останніми повідомленнями -->
+<div id="recentMsgsPopup" class="recent-popup" style="display:none;">
+    <div class="recent-popup-header">
+        <span>💬 Останні повідомлення</span>
+        <button type="button" id="closePopupBtn">✕</button>
+    </div>
+    <div id="recentMsgsList" class="recent-popup-list">
+        <p class="popup-loading">Завантаження...</p>
+    </div>
+</div>
+<div id="popupOverlay" class="popup-overlay" style="display:none;"></div>
+
 </section>
 
 <section class="summary-and-send">
