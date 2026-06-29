@@ -474,3 +474,41 @@ input[type="text"] {
     padding: 20px;
     font-size: 14px;
 }
+
+/* ==========================================================
+   ДОДАТИ В КІНЕЦЬ style.css — кнопка INST
+   ========================================================== */
+
+.inst-toggle {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    transition: all 0.2s;
+}
+.inst-toggle input {
+    display: none;
+}
+.inst-label {
+    font-size: 0.85em;
+    font-weight: bold;
+    color: #aaa;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+    user-select: none;
+}
+.inst-toggle input:checked + .inst-label {
+    color: #e1306c;
+}
+.inst-toggle input:checked ~ * ,
+.inst-toggle:has(input:checked) {
+    background-color: #fff0f5;
+    border-color: #e1306c;
+}
+.inst-toggle:has(input:checked) {
+    background-color: #fff0f5;
+    border-color: #e1306c;
+}
