@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const WORKER_URL = 'https://crm-facebook.brelok2023.workers.dev';
     const BOT_URL = 'https://gravikfruktbot73-258d02b2196e.herokuapp.com';
 
+    // 🛡️ ЗАХИСТ ВІД ДУБЛІВ
+    let isSubmitting = false;
+
     // 3. --- ЭЛЕМЕНТЫ ФОРМЫ ---
     const form = document.getElementById('crmOrderForm');
     const productList = document.getElementById('productList');
@@ -27,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const extraChargeInput = document.getElementById('extraCharge');
     const orderCommentInput = document.getElementById('orderComment');
     
-    // Элементы для ССЫЛКИ (Новые)
+    // Элементы для ССЫЛКИ
     const linkContainer = document.getElementById('orderLinkContainer');
     const linkInput = document.getElementById('generatedLink');
     const copyBtn = document.getElementById('copyLinkBtn');
@@ -103,10 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if(copyBtn) {
             copyBtn.addEventListener('click', () => {
                 if(!linkInput.value) return;
-                
                 linkInput.select();
-                linkInput.setSelectionRange(0, 99999); // Для мобилок
-                
+                linkInput.setSelectionRange(0, 99999);
                 navigator.clipboard.writeText(linkInput.value).then(() => {
                     copyFeedback.style.display = 'block';
                     setTimeout(() => { copyFeedback.style.display = 'none'; }, 2000);
@@ -142,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     `).join('');
                     
-                    // Клік по повідомленню — вставляємо ID
                     recentMsgsList.querySelectorAll('.popup-msg-item').forEach(item => {
                         item.addEventListener('click', () => {
                             clientFbIdInput.value = item.dataset.id;
@@ -174,8 +174,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const item = e.target.closest('.product-item');
         if (!item) return;
         const checkbox = item.querySelector('.product-checkbox');
-        
-        // Если клик не по селекту количества, переключаем чекбокс
         if (e.type === 'click' && !e.target.closest('.quantity-select')) {
             checkbox.checked = !checkbox.checked;
         }
@@ -216,7 +214,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // 6. --- ОТПРАВКА ФОРМЫ ---
     async function submitForm(e) {
         e.preventDefault();
-        
+
+        // 🛡️ ЗАХИСТ: якщо вже відправляємо — ігноруємо повторний запит
+        if (isSubmitting) return;
+        isSubmitting = true;
+
         // Скрываем прошлую ссылку при новой отправке
         if(linkContainer) linkContainer.style.display = 'none';
         
@@ -225,10 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
         statusMessage.textContent = '';
 
         const clientFacebook = document.getElementById('clientFacebook').value.trim();
-        
-        // 👇👇👇 1. БЕРЕМО ЗНАЧЕННЯ ID З НОВОГО ПОЛЯ 👇👇👇
         const clientFbId = document.getElementById('clientFbId').value.trim(); 
-        // 👆👆👆
 
         const markRedCheckbox = document.getElementById('markRed');
         const isUrgent = markRedCheckbox ? markRedCheckbox.checked : false;
@@ -236,13 +235,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const markInstCheckbox = document.getElementById('markInst');
         const isInst = markInstCheckbox ? markInstCheckbox.checked : false;
 
-
         const mainItems = [], extraItems = [];
         document.querySelectorAll('.product-item.selected').forEach(item => {
             const info = PRODUCT_MAP[item.dataset.id];
-            // Защита от ошибки, если товара нет в PRODUCT_MAP
             if(!info) return; 
-
             const qty = parseInt(item.querySelector('.quantity-select').value);
             const arr = Array(qty).fill(info.name);
             if (info.is_main) mainItems.push(...arr);
@@ -253,6 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (!clientFacebook || !paymentMethodRadio) {
             showError('Будь ласка, заповніть Нік та оберіть метод оплати.');
+            isSubmitting = false;
             return;
         }
 
@@ -269,17 +266,12 @@ document.addEventListener('DOMContentLoaded', () => {
             prepaymentAmount = parseFloat(customPrepaymentInput.value) || 0;
         }
 
-        // Генерируем ID
         const currentOrderId = generateOrderId();
 
         const payload = {
             order_id: currentOrderId, 
             Ник: isInst ? `inst ${clientFacebook}` : clientFacebook,
-            
-            // 👇👇👇 2. ДОДАЄМО ID У ВІДПРАВКУ 👇👇👇
             fb_id: clientFbId, 
-            // 👆👆👆
-            
             isUrgent: isUrgent,      
             Заказ_жетон: mainItems.join('+') || '-',
             Доп_товары: extraItems.join('+') || '-',
@@ -289,20 +281,25 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         try {
+            // 🛡️ ТАЙМАУТ 30 СЕКУНД — браузер чекає достатньо довго і не повторює сам
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 60000);
+
             const response = await fetch(WORKER_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
+                signal: controller.signal
             });
+            clearTimeout(timeoutId);
+
             const result = await response.json();
             
             if (result.status === 'success') {
                 showSuccess(`✅ Заказ ID: ${currentOrderId} створено!`); 
                 
-                // 1. СНАЧАЛА ОЧИЩАЕМ ВСЁ
                 form.reset();
                 
-                // Сброс галочек
                 document.querySelectorAll('.product-item').forEach(item => {
                     item.querySelector('.product-checkbox').checked = false; 
                     updateItemState(item);
@@ -312,22 +309,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 customPrepaymentInput.disabled = true;
                 updateTotalSummary();
 
-                // 2. ПАУЗА 100мс ПЕРЕД ВСТАВКОЙ (ЧТОБЫ НАВЕРНЯКА)
                 setTimeout(() => {
                     if(linkContainer && linkInput) {
                         const fullLink = `https://dostavkagravochka.github.io/index.html?id=${currentOrderId}`;
-                        
-                        // --- ИЗМЕНЕНИЯ ЗДЕСЬ ---
-                        // Добавляем текст перед ссылкой
                         const messageText = "Заповніть будь-ласка дані для доставки за посиланням:👍 ";
-                        
-                        // Склеиваем текст и ссылку и кладем в поле
                         linkInput.value = messageText + fullLink; 
-                        // -----------------------
-
-                        linkContainer.style.display = 'block'; // Показываем блок
-                    } else {
-                        console.error("ОШИБКА: Не найдены элементы linkContainer или linkInput в HTML!");
+                        linkContainer.style.display = 'block';
                     }
                 }, 100);
 
@@ -337,6 +324,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Ошибка отправки:', error);
             showError(`❌ Критична помилка з'єднання: ${error.message}`);
+        } finally {
+            // 🛡️ Завжди знімаємо блокування після завершення
+            isSubmitting = false;
         }
     }
 
@@ -345,6 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
         statusMessage.style.color = 'red';
         sendButton.disabled = false;
         sendButton.innerHTML = '<i class="fas fa-paper-plane"></i> Сформувати Замовлення';
+        isSubmitting = false;
     }
 
     function showSuccess(message) {
@@ -353,7 +344,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sendButton.disabled = false;
         sendButton.innerHTML = '<i class="fas fa-check"></i> Замовлення відправлено';
         setTimeout(() => { 
-            // Возвращаем кнопку в исходное состояние через 5 сек
             sendButton.innerHTML = '<i class="fas fa-paper-plane"></i> Сформувати Замовлення';
         }, 5000);
     }
