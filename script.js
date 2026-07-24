@@ -21,6 +21,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // 🛡️ ЗАХИСТ ВІД ДУБЛІВ
     let isSubmitting = false;
 
+    let lastOrderRow = 3; // Кешована остання рядок з Apps Script
+ 
+    // Запит до Apps Script при завантаженні сторінки
+    fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'get_last_row' })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.status === 'success') {
+            lastOrderRow = data.last_row;
+            console.log('Остання рядок:', lastOrderRow);
+        }
+    })
+    .catch(() => {
+        console.log('Не вдалось отримати останній рядок, використовуємо 3');
+    });
+
+
     // 3. --- ЭЛЕМЕНТЫ ФОРМЫ ---
     const form = document.getElementById('crmOrderForm');
     const productList = document.getElementById('productList');
@@ -277,7 +297,8 @@ document.addEventListener('DOMContentLoaded', () => {
             Доп_товары: extraItems.join('+') || '-',
             Предоплата: prepaymentAmount,
             extraCharge: parseFloat(extraChargeInput.value) || 0,
-            comment: orderCommentInput.value.trim()
+            comment: orderCommentInput.value.trim(),
+            start_row: lastOrderRow,
         };
 
         try {
