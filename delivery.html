@@ -17,7 +17,7 @@
         button:hover { background: #218838; }
         button:disabled { background: #ccc; cursor: not-allowed; }
         .status { text-align: center; margin-top: 15px; font-weight: bold; }
-        /* Стили для Select2 (поиск) */
+        /* Стили для Select2 */
         .select2-container .select2-selection--single { height: 45px; border: 1px solid #ddd; border-radius: 8px; }
         .select2-container--default .select2-selection--single .select2-selection__rendered { line-height: 45px; padding-left: 12px; }
         .select2-container--default .select2-selection--single .select2-selection__arrow { height: 45px; }
@@ -27,13 +27,17 @@
 <body>
 
 <div class="container">
-    <h2>🚚 Дані для доставки</h2>
+    <h2>🚚 Дані отримувача посилики</h2>
     <div class="order-id-display" id="orderIdDisplay">Завантаження...</div>
+    <div id="nickBox" style="display:none; align-items:center; justify-content:space-between; gap:10px; background:#eef6ff; border:1px solid #cfe2ff; border-radius:8px; padding:10px 12px; margin-bottom:20px;">
+    <span><span style="color:#666; font-size:0.85em;">Нік:</span> <b id="nickText"></b></span>
+    <button type="button" id="copyNickBtn" style="width:auto; margin:0; padding:8px 14px; font-size:14px;">📋 Копіювати</button>
+    </div>
 
     <form id="deliveryForm">
         <div class="form-group">
             <label>Прізвище Ім'я По батькові</label>
-            <input type="text" id="fio" placeholder="Іванов Іван Іванович" required>
+            <input type="text" id="fio" placeholder="ПІБ" required>
         </div>
 
         <div class="form-group">
@@ -65,101 +69,107 @@
 
 <script>
     // --- НАСТРОЙКИ ---
-    // Вставь сюда свой URL от Cloudflare Workers
-    const WORKER_URL = 'https://crm-facebook.brelok2023.workers.dev'; 
+    // ТВОЙ НОВЫЙ БЕЗОПАСНЫЙ ВОРКЕР
+    const WORKER_URL = 'https://dostavkagravochka.brelok2023.workers.dev'; 
     
-    // Вставь сюда API Ключ Новой Почты (создай новый или используй существующий)
-    const NP_API_KEY = '66885fa6c73156f763104583f3ae6302'; 
+    // API KEY ЗДЕСЬ БОЛЬШЕ НЕТ. ОН СПРЯТАН ВНУТРИ ВОРКЕРА.
 
     // --- ЛОГИКА ---
     const urlParams = new URLSearchParams(window.location.search);
     const orderId = urlParams.get('id');
     
-    // Переменные для хранения Ref кодов (нужны для ТТН)
     let selectedCityRef = '';
     let selectedBranchRef = '';
 
     $(document).ready(function() {
+        // Проверка наличия ID заказа в ссылке
         if (!orderId) {
             document.body.innerHTML = '<h2 style="text-align:center; margin-top:50px;">❌ Помилка: Невірне посилання (немає ID замовлення).</h2>';
             return;
         }
         $('#orderIdDisplay').text(`Замовлення №: ${orderId}`);
+                const nick = urlParams.get('nick');
+        if (nick) {
+            $('#nickText').text(nick);
+            $('#nickBox').css('display', 'flex');
+            $('#copyNickBtn').on('click', function () {
+                const btn = $(this);
+                const done = () => { btn.text('✅ Скопійовано'); setTimeout(() => btn.text('📋 Копіювати'), 1500); };
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(nick).then(done);
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = nick; document.body.appendChild(ta); ta.select();
+                    document.execCommand('copy'); document.body.removeChild(ta); done();
+                }
+            });
+        }
 
-        // 1. Настройка поиска ГОРОДА (Select2 + NP API)
+        // 1. ПОИСК ГОРОДА (Через твой Worker)
         $('#citySelect').select2({
             placeholder: "Введіть назву міста...",
             minimumInputLength: 2,
             language: { inputTooShort: () => "Введіть хоча б 2 літери для пошуку..." },
             ajax: {
-                url: 'https://api.novaposhta.ua/v2.0/json/',
+                url: WORKER_URL, // Шлем запрос на твой воркер
                 type: 'POST',
                 dataType: 'json',
-                delay: 500, // Задержка чтобы не спамить запросами
+                delay: 500,
+                contentType: 'application/json',
                 data: function (params) {
                     return JSON.stringify({
-                        apiKey: NP_API_KEY,
-                        modelName: "Address",
-                        calledMethod: "searchSettlements",
-                        methodProperties: {
-                            CityName: params.term,
-                            Limit: "20",
-                            Page: "1"
-                        }
+                        action: 'search_city', // Говорим воркеру "Ищи город"
+                        term: params.term
                     });
                 },
                 processResults: function (data) {
-                    if (data.success && data.data[0]) {
-                        return {
-                            results: data.data[0].Addresses.map(item => ({
-                                id: item.DeliveryCity, // Сохраняем Ref города
-                                text: `${item.Present}`, // Показываем название
-                                cityRef: item.DeliveryCity // Дублируем для удобства
-                            }))
-                        };
+                    // Воркер вернет уже готовый массив или success:false
+                    if (data.status === 'success' && data.data) {
+                         return { results: data.data };
                     }
                     return { results: [] };
                 }
             }
         });
 
-        // 2. Когда город выбран -> Грузим ОТДЕЛЕНИЯ
+        // 2. ВЫБОР ОТДЕЛЕНИЯ (Через твой Worker)
         $('#citySelect').on('select2:select', function (e) {
-            selectedCityRef = e.params.data.id; // Ref города
+            selectedCityRef = e.params.data.id; // Сохраняем Ref города
             $('#branchSelect').prop('disabled', true).empty().append('<option>Завантаження...</option>');
             
-            // Запрос отделений
-            fetch('https://api.novaposhta.ua/v2.0/json/', {
+            // Запрашиваем отделения через Worker
+            fetch(WORKER_URL, {
                 method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    apiKey: NP_API_KEY,
-                    modelName: "Address",
-                    calledMethod: "getWarehouses",
-                    methodProperties: {
-                        CityRef: selectedCityRef,
-                    }
+                    action: 'get_branches', // Говорим воркеру "Дай отделения"
+                    city_ref: selectedCityRef
                 })
             })
             .then(res => res.json())
             .then(response => {
                 $('#branchSelect').empty().append('<option value="">Оберіть відділення...</option>');
-                if(response.success) {
+                if(response.status === 'success') {
                     response.data.forEach(branch => {
-                        // Фильтруем почтоматы, если хочешь (CategoryOfWarehouse)
-                        // Сейчас показываем всё
-                        $('#branchSelect').append(`<option value="${branch.Ref}">${branch.Description}</option>`);
+                        $('#branchSelect').append(`<option value="${branch.id}">${branch.text}</option>`);
                     });
                     $('#branchSelect').prop('disabled', false).select2();
+                } else {
+                    alert('Не вдалося завантажити відділення. Спробуйте ще раз.');
                 }
+            })
+            .catch(err => {
+                console.error(err);
+                $('#branchSelect').empty().append('<option value="">Помилка завантаження</option>');
             });
         });
 
-        // 3. Сохранение Ref отделения
+        // Сохранение Ref отделения при выборе
         $('#branchSelect').on('change', function() {
             selectedBranchRef = $(this).val();
         });
 
-        // 4. ОТПРАВКА ДАННЫХ
+        // 3. ОТПРАВКА ДАННЫХ (Через твой Worker в Google Таблицу)
         $('#deliveryForm').on('submit', async function(e) {
             e.preventDefault();
             const btn = $('#submitBtn');
@@ -169,12 +179,12 @@
             status.text('');
 
             const payload = {
-                action: 'update_delivery', // Команда для Воркера
+                action: 'update_delivery', // Говорим воркеру "Отправь в Гугл"
                 order_id: orderId,
                 fio: $('#fio').val().trim(),
                 phone: $('#phone').val().trim(),
-                city: $('#citySelect option:selected').text(), // Название города
-                branch: $('#branchSelect option:selected').text(), // Название отделения
+                city: $('#citySelect option:selected').text(),
+                branch: $('#branchSelect option:selected').text(),
                 ref_data: {
                     city_ref: selectedCityRef,
                     branch_ref: selectedBranchRef
